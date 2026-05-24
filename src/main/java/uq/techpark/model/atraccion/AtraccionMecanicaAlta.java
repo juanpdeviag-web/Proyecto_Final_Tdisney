@@ -1,13 +1,13 @@
 package modelo.Proyecto_Final_Tdisney.src.main.java.uq.techpark.model.atraccion;
 
-public class AtraccionGeneral extends Atraccion {
+public class AtraccionMecanicaAlta extends Atraccion {
 
-    public AtraccionGeneral(String id, String nombre, int capacidad, double estaturaMinima, int edadMinima) {
+    public AtraccionMecanicaAlta(String id, String nombre, int capacidad, double estaturaMinima, int edadMinima) {
         super(id, nombre, capacidad, estaturaMinima, edadMinima);
     }
 
     @Override
     public boolean cerrarPorClima() {
-        return false;
+        return true;
     }
 }
