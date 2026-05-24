@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 
 
 
+
         // ========== MÉTODOS DE GESTIÓN DE COLECCIONES ==========
 
         public void agregarZona(Zona zona) {
@@ -146,5 +147,98 @@ import java.util.stream.Collectors;
             if (aforoTotal == 0) return 0.0;
             return (calcularVisitantesActivos() * 100.0) / aforoTotal;
         }
+        /**
+         * Valida y registra el acceso de un visitante a una atracción
+         * Implementa todas las reglas de negocio del torniquete
+         */
+        public String validarYRegistrarAcceso(Visitante visitante, Atraccion atraccion) {
+            // Validación 1: Estado de la atracción
+            if (atraccion.getEstado() != EstadoAtraccion.ACTIVA) {
+                return "Acceso denegado: La atracción está " + atraccion.getEstado() +
+                        ". Motivo: " + atraccion.getMotivoEstado();
+            }
+
+            // Validación 2: Edad mínima
+            if (visitante.getEdad() < atraccion.getEdadMinima()) {
+                return "Acceso denegado: Edad mínima requerida: " + atraccion.getEdadMinima() + " años";
+            }
+
+            // Validación 3: Altura mínima
+            if (visitante.getEstatura() < atraccion.getAlturaMinima()) {
+                return String.format("Acceso denegado: Altura mínima requerida: %.2fm",
+                        atraccion.getAlturaMinima());
+            }
+
+            // Validación 4: Ticket válido
+            Ticket ticket = visitante.getTicket();
+            if (ticket == null) {
+                return "Acceso denegado: El visitante no posee un ticket válido";
+            }
+
+            // Validación 5: Saldo para costos adicionales (solo Ticket General)
+            if (ticket.getTipo() == TipoTicket.GENERAL && atraccion.getCostoAdicional() > 0) {
+                if (visitante.getSaldoVirtual() < atraccion.getCostoAdicional()) {
+                    return String.format("Acceso denegado: Saldo insuficiente. Requiere $%.2f adicionales",
+                            atraccion.getCostoAdicional());
+                }
+                // Deducir el saldo
+                visitante.deducirSaldo(atraccion.getCostoAdicional());
+            }
+
+            // Registrar el ingreso en la atracción (incrementa contador y valida mantenimiento)
+            atraccion.registrarIngresoVisitante();
+
+            // Crear registro de visita para el historial del visitante
+            RegistroVisita registro = new RegistroVisita(
+                    atraccion,
+                    atraccion.getCostoAdicional(),
+                    atraccion.getTiempoEsperaMinutos()
+            );
+            visitante.agregarVisita(registro);
+
+            return "Acceso concedido exitosamente a " + atraccion.getNombre();
+        }
+
+        /**
+         * Activa alerta climática y cierra atracciones vulnerables
+         * Envía notificaciones a todos los visitantes activos
+         */
+        public void activarAlertaClimatica(String tipoClima) {
+            this.climaActual = tipoClima;
+
+            List<Atraccion> atraccionesCerradas = new ArrayList<>();
+
+            // Evaluar todas las atracciones
+            for (Atraccion atraccion : atraccionesGlobales) {
+                EstadoAtraccion estadoAnterior = atraccion.getEstado();
+                atraccion.evaluarCierrePorClima(tipoClima);
+
+                // Si cambió de ACTIVA a CERRADA, agregar a la lista
+                if (estadoAnterior == EstadoAtraccion.ACTIVA &&
+                        atraccion.getEstado() == EstadoAtraccion.CERRADA) {
+                    atraccionesCerradas.add(atraccion);
+                }
+            }
+
+            // Si hay atracciones cerradas, notificar a todos los visitantes
+            if (!atraccionesCerradas.isEmpty()) {
+                StringBuilder mensaje = new StringBuilder("ALERTA CLIMÁTICA: " + tipoClima.toUpperCase());
+                mensaje.append(". Atracciones cerradas: ");
+                for (int i = 0; i < atraccionesCerradas.size(); i++) {
+                    mensaje.append(atraccionesCerradas.get(i).getNombre());
+                    if (i < atraccionesCerradas.size() - 1) {
+                        mensaje.append(", ");
+                    }
+                }
+
+                Notificacion notificacion = new Notificacion(mensaje.toString());
+
+                // Enviar notificación a todos los visitantes
+                for (Visitante visitante : visitantes) {
+                    visitante.recibirNotificacion(notificacion);
+                }
+            }
+        }
+
     }
-}
+
