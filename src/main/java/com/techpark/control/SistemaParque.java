@@ -240,5 +240,45 @@ import java.util.stream.Collectors;
             }
         }
 
+        /**
+         * Calcula los ingresos totales del día
+         * Suma: precio de tickets vendidos + costos adicionales pagados en torniquetes
+         */
+        public double calcularIngresosDiarios() {
+            // Ingresos por venta de tickets
+            double ingresosPorTickets = ticketsVendidos.stream()
+                    .mapToDouble(Ticket::calcularPrecioFinal)
+                    .sum();
+
+            // Ingresos por costos adicionales en atracciones
+            double ingresosPorCostosAdicionales = visitantes.stream()
+                    .flatMap(v -> v.getHistorialVisitas().stream())
+                    .mapToDouble(RegistroVisita::getGastoAdicional)
+                    .sum();
+
+            return ingresosPorTickets + ingresosPorCostosAdicionales;
+        }
+
+        /**
+         * Obtiene las N atracciones más visitadas ordenadas descendentemente
+         */
+        public List<Atraccion> obtenerAtraccionesMasVisitadas(int cantidad) {
+            return atraccionesGlobales.stream()
+                    .sorted(Comparator.comparingInt(Atraccion::getVisitantesAcumulados).reversed())
+                    .limit(cantidad)
+                    .collect(Collectors.toList());
+        }
+
+        /**
+         * Calcula el tiempo promedio de espera de todas las atracciones activas
+         */
+        public double calcularTiempoPromedioEspera() {
+            return atraccionesGlobales.stream()
+                    .filter(a -> a.getEstado() == EstadoAtraccion.ACTIVA)
+                    .mapToInt(Atraccion::getTiempoEsperaMinutos)
+                    .average()
+                    .orElse(0.0);
+        }
+
     }
 
