@@ -1,4 +1,4 @@
-package main.java.uq.techpark.controller;
+package main.java.com.techpark.controller;
 
 public class AdminDashboardController {
 }
