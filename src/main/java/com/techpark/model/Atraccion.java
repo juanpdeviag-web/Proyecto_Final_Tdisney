@@ -112,4 +112,28 @@ package com.techpark.model;
         public String getMotivoEstado() {
             return motivoEstado;
         }
+        public void evaluarCierrePorClima(String tipoClima) {
+            if ((tipoClima.equalsIgnoreCase("lluvia") || tipoClima.equalsIgnoreCase("tormenta"))
+                    && (tipo == TipoAtraccion.ACUATICA || tipo == TipoAtraccion.MECANICA_ALTURA)) {
+                this.estado = EstadoAtraccion.CERRADA;
+                this.motivoEstado = "Cerrada por condiciones climáticas: " + tipoClima;
+            }
+        }
+
+        public boolean registrarIngresoVisitante() {
+            if (estado != EstadoAtraccion.ACTIVA) {
+                return false;
+            }
+
+            visitantesAcumulados++;
+
+            if (visitantesAcumulados >= UMBRAL_MANTENIMIENTO) {
+                this.estado = EstadoAtraccion.EN_MANTENIMIENTO;
+                this.motivoEstado = "Mantenimiento preventivo automático - 500 visitantes alcanzados";
+                return true;
+            }
+
+            return true;
+        }
 }
+
