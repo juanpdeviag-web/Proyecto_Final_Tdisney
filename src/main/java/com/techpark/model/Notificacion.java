@@ -1,4 +1,4 @@
-package com.techpark.util;
+package com.techpark.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
