@@ -7,7 +7,7 @@ class TicketPolimorfismoTest {
 
     @Test
     void testCalcularPrecioFinalTicketGeneral() {
-        // Un ticket general de 50.000 COP no debería sufrir modificaciones
+        // Un ticket general de 50.000 COP sin modificaciones
         Ticket ticketGeneral = new TicketGeneral("TCK-GEN-01", 50000.0);
 
         assertEquals(50000.0, ticketGeneral.calcularPrecioFinal(), 0.01);
