@@ -27,7 +27,7 @@ import java.util.List;
         public void agregarOperador(Operador operador) {
             if (operador != null && !operadores.contains(operador)) {
                 operadores.add(operador);
-                operador.setZonaAsignada(this);
+                operador.setAreaAsignada(String.valueOf(this));
             }
         }
 
@@ -77,4 +77,4 @@ import java.util.List;
                     idZona, nombre, aforoMaximo, atracciones.size(), operadores.size());
         }
     }
-}
+

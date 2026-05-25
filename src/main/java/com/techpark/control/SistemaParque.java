@@ -71,7 +71,7 @@ import java.util.stream.Collectors;
 
         public Visitante buscarVisitantePorDocumento(String documento) {
             return visitantes.stream()
-                    .filter(v -> v.getIdDocumento().equals(documento))
+                    .filter(v -> v.getDocumento().equals(documento))
                     .findFirst()
                     .orElse(null);
         }

@@ -50,4 +50,6 @@ public abstract class Persona implements Serializable {
     public void setEstatura(double estatura) {
         this.estatura = estatura;
     }
+
+
 }

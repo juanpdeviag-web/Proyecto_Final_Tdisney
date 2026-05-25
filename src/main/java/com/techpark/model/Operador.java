@@ -23,7 +23,7 @@ public class Operador extends Empleado {
     }
 
     public void setAreaAsignada(String areaAsignada) {
-        this.areaAsignada = areaAsignada;
+
     }
 
     public void realizarMantenimiento(Atraccion atraccion) {
