@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.*;
             assertEquals(EstadoAtraccion.EN_MANTENIMIENTO, atraccion.getEstado());
 
             Operador operador = new Operador("9876", "María García", 30, 1.65,
-                    "maria.op", "pass456", null);
+                    "maria.op", 12.333, null);
 
             operador.realizarMantenimiento(atraccion);
 
@@ -49,4 +49,3 @@ import static org.junit.jupiter.api.Assertions.*;
             assertEquals(EstadoAtraccion.ACTIVA, atraccion.getEstado());
         }
     }
-}
