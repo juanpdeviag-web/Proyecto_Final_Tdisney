@@ -3,7 +3,7 @@ package com.techpark.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Visitante extends Persona implements INotificable {
+public class Visitante extends Persona implements Notificable {
     private double saldoVirtual;
     private String rutaFotografia;
     private Ticket ticket;

@@ -1,6 +1,6 @@
 package com.techpark.model;
 
-public interface INotificable {
+public interface Notificable {
         void recibirNotificacion(Notificacion notificacion);
     }
 
