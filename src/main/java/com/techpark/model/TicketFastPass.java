@@ -1,24 +1,23 @@
 package com.techpark.model;
 
-
 public class TicketFastPass extends Ticket {
-    private double cargoAdicional;
+    private double recargoPrioridad;
 
-    public TicketFastPass(String id, double precioBase, double cargoAdicional) {
-        super(id, precioBase, TipoTicket.FAST_PASS);
-        this.cargoAdicional = cargoAdicional;
+    public TicketFastPass(String idTicket, double precioBase, double recargoPrioridad) {
+        super(idTicket, precioBase, TipoTicket.FAST_PASS);
+        this.recargoPrioridad = recargoPrioridad;
     }
 
     @Override
     public double calcularPrecioFinal() {
-        return getPrecioBase() + cargoAdicional;
+        return getPrecioBase() + recargoPrioridad;
     }
 
-    public double getCargoAdicional() {
-        return cargoAdicional;
+    public double getRecargoPrioridad() {
+        return recargoPrioridad;
     }
 
-    public void setCargoAdicional(double cargoAdicional) {
-        this.cargoAdicional = cargoAdicional;
+    public void setRecargoPrioridad(double recargoPrioridad) {
+        this.recargoPrioridad = recargoPrioridad;
     }
 }

@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         inicializarDatosPrueba();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
+        FXMLLoader loader = new FXMLLoader(Thread.currentThread().getContextClassLoader().getResource("fxml/MainView.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root, 1200, 800);

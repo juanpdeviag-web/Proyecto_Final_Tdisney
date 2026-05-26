@@ -1,12 +1,17 @@
 package com.techpark.model;
-import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
-
-public record Notificacion(String mensaje, LocalDateTime fecha) implements Serializable {
-    private static final long serialVersionUID = 1L;
+public record Notificacion(String mensaje, LocalDateTime fecha) {
 
     public Notificacion(String mensaje) {
         this(mensaje, LocalDateTime.now());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s] %s",
+                fecha.toLocalDate() + " " + fecha.toLocalTime().toString().substring(0, 8),
+                mensaje);
     }
 }

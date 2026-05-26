@@ -1,5 +1,4 @@
-package com.techpark.control;
-import com.techpark.model.*;
+package com.techpark.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

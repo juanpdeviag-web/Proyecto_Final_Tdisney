@@ -1,30 +1,38 @@
 package com.techpark.model;
-import java.io.Serializable;
 
-public abstract class Ticket implements Serializable {
-    private static final long serialVersionUID = 1L;
+import java.time.LocalDate;
 
-    private String id;
+public abstract class Ticket {
+    private String idTicket;
+    private LocalDate fechaEmision;
     private double precioBase;
     private TipoTicket tipo;
+    private boolean usado;
 
-    // Constructor completo
-    public Ticket(String id, double precioBase, TipoTicket tipo) {
-        this.id = id;
+    public Ticket(String idTicket, double precioBase, TipoTicket tipo) {
+        this.idTicket = idTicket;
         this.precioBase = precioBase;
         this.tipo = tipo;
+        this.fechaEmision = LocalDate.now();
+        this.usado = false;
     }
 
-    // Método abstracto cada tipo de ticket calculará su precio final de forma diferente
     public abstract double calcularPrecioFinal();
 
-
-    public String getId() {
-        return id;
+    public String getIdTicket() {
+        return idTicket;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdTicket(String idTicket) {
+        this.idTicket = idTicket;
+    }
+
+    public LocalDate getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setFechaEmision(LocalDate fechaEmision) {
+        this.fechaEmision = fechaEmision;
     }
 
     public double getPrecioBase() {
@@ -41,5 +49,19 @@ public abstract class Ticket implements Serializable {
 
     public void setTipo(TipoTicket tipo) {
         this.tipo = tipo;
+    }
+
+    public boolean isUsado() {
+        return usado;
+    }
+
+    public void setUsado(boolean usado) {
+        this.usado = usado;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Ticket %s [%s] - Precio Final: $%.2f - Emitido: %s",
+                idTicket, tipo, calcularPrecioFinal(), fechaEmision);
     }
 }

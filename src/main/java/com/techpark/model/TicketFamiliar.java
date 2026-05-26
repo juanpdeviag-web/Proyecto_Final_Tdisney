@@ -1,22 +1,23 @@
 package com.techpark.model;
-public class TicketFamiliar extends Ticket {
-    private double descuentoFamiliar; // Ejemplo: 0.15 para el 15%
 
-    public TicketFamiliar(String id, double precioBase, double descuentoFamiliar) {
-        super(id, precioBase, TipoTicket.FAMILIAR);
-        this.descuentoFamiliar = descuentoFamiliar;
+public class TicketFamiliar extends Ticket {
+    private double porcentajeDescuento;
+
+    public TicketFamiliar(String idTicket, double precioBase, double porcentajeDescuento) {
+        super(idTicket, precioBase, TipoTicket.FAMILIAR);
+        this.porcentajeDescuento = porcentajeDescuento;
     }
 
     @Override
     public double calcularPrecioFinal() {
-        return getPrecioBase() * (1.0 - descuentoFamiliar);
+        return getPrecioBase() * (1 - porcentajeDescuento / 100.0);
     }
 
-    public double getDescuentoFamiliar() {
-        return descuentoFamiliar;
+    public double getPorcentajeDescuento() {
+        return porcentajeDescuento;
     }
 
-    public void setDescuentoFamiliar(double descuentoFamiliar) {
-        this.descuentoFamiliar = descuentoFamiliar;
+    public void setPorcentajeDescuento(double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
     }
 }

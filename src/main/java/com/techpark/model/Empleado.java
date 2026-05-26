@@ -1,35 +1,38 @@
 package com.techpark.model;
 
-
 public abstract class Empleado extends Persona {
-    private static final long serialVersionUID = 1L;
+    private String usuario;
+    private String contrasena;
 
-    private String idEmpleado;
-    private double salarioBase;
-
-    public Empleado(String documento, String nombre, int edad, double estatura, String idEmpleado, double salarioBase) {
-        super(nombre, documento, edad, estatura);
-        this.idEmpleado = idEmpleado;
-        this.salarioBase = salarioBase;
+    public Empleado(String idDocumento, String nombre, int edad, double estatura,
+                    String usuario, String contrasena) {
+        super(idDocumento, nombre, edad, estatura);
+        this.usuario = usuario;
+        this.contrasena = contrasena;
     }
 
-    // Método abstracto: cada tipo de empleado calculará sus bonificaciones o salario neto de forma diferente
-    public abstract double calcularSalarioNeto();
-
-
-    public String getIdEmpleado() {
-        return idEmpleado;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setIdEmpleado(String idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public double getSalarioBase() {
-        return salarioBase;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setSalarioBase(double salarioBase) {
-        this.salarioBase = salarioBase;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public boolean autenticar(String usuario, String contrasena) {
+        return this.usuario.equals(usuario) && this.contrasena.equals(contrasena);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - Usuario: %s", super.toString(), usuario);
     }
 }

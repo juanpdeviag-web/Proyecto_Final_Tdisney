@@ -27,7 +27,7 @@ import java.util.List;
         public void agregarOperador(Operador operador) {
             if (operador != null && !operadores.contains(operador)) {
                 operadores.add(operador);
-                operador.setAreaAsignada(String.valueOf(this));
+                operador.setZonaAsignada(this);
             }
         }
 

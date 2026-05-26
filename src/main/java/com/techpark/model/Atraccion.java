@@ -29,6 +29,8 @@ package com.techpark.model;
             this.estado = EstadoAtraccion.ACTIVA;
             this.motivoEstado = "Operativa";
         }
+
+        //Getters ans Setters
         public String getIdAtraccion() {
             return idAtraccion;
         }
@@ -112,6 +114,13 @@ package com.techpark.model;
         public String getMotivoEstado() {
             return motivoEstado;
         }
+
+        public void setMotivoEstado(String motivoEstado) { this.motivoEstado = motivoEstado; }
+
+        public void reiniciarContadorVisitantes() { this.visitantesAcumulados = 0; }
+
+        //Metodos
+
         public void evaluarCierrePorClima(String tipoClima) {
             if ((tipoClima.equalsIgnoreCase("lluvia") || tipoClima.equalsIgnoreCase("tormenta"))
                     && (tipo == TipoAtraccion.ACUATICA || tipo == TipoAtraccion.MECANICA_ALTURA)) {
@@ -134,6 +143,13 @@ package com.techpark.model;
             }
 
             return true;
+        }
+
+
+        @Override
+        public String toString() {
+            return String.format("%s - %s [%s] - Estado: %s - Visitantes: %d/500",
+                    idAtraccion, nombre, tipo, estado, visitantesAcumulados);
         }
 }
 

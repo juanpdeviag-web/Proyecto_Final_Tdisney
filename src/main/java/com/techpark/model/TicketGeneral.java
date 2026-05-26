@@ -1,10 +1,9 @@
 package com.techpark.model;
 
-
 public class TicketGeneral extends Ticket {
 
-    public TicketGeneral(String id, double precioBase) {
-        super(id, precioBase, TipoTicket.GENERAL);
+    public TicketGeneral(String idTicket, double precioBase) {
+        super(idTicket, precioBase, TipoTicket.GENERAL);
     }
 
     @Override

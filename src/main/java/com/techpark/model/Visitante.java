@@ -4,43 +4,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Visitante extends Persona implements INotificable {
-    private static final long serialVersionUID = 1L;
-
     private double saldoVirtual;
-    private String fotografiaUrl; // Opcional para el pase digital
-    private Ticket ticket; // Ticket asociado (General, Familiar o FastPass)
-
-    // Listas de historial y notificaciones
+    private String rutaFotografia;
+    private Ticket ticket;
     private List<RegistroVisita> historialVisitas;
     private List<Notificacion> buzonNotificaciones;
+    private List<Atraccion> atraccionesFavoritas;
 
-    // Constructor completo
-    public Visitante(String documento, String nombre, int edad, double estatura, double saldoVirtual, String fotografiaUrl) {
-        super(nombre, documento, edad, estatura); // Pasa los datos a la clase abstracta Persona
+    public Visitante(String idDocumento, String nombre, int edad, double estatura,
+                     double saldoVirtual, String rutaFotografia) {
+        super(idDocumento, nombre, edad, estatura);
         this.saldoVirtual = saldoVirtual;
-        this.fotografiaUrl = fotografiaUrl;
+        this.rutaFotografia = rutaFotografia;
         this.historialVisitas = new ArrayList<>();
         this.buzonNotificaciones = new ArrayList<>();
+        this.atraccionesFavoritas = new ArrayList<>();
     }
 
-    // Método obligatorio de la interfaz INotificable
     @Override
     public void recibirNotificacion(Notificacion notificacion) {
-        if (notificacion != null) {
-            this.buzonNotificaciones.add(notificacion);
+        buzonNotificaciones.add(notificacion);
+    }
+
+    public void agregarFavorita(Atraccion atraccion) {
+        if (atraccion != null && !atraccionesFavoritas.contains(atraccion)) {
+            atraccionesFavoritas.add(atraccion);
         }
     }
 
-    // Método para agregar una visita al historial
-    public void registrarNuevaVisita(RegistroVisita visita) {
-        if (visita != null) {
-            this.historialVisitas.add(visita);
+    public void removerFavorita(Atraccion atraccion) {
+        atraccionesFavoritas.remove(atraccion);
+    }
+
+    public List<Atraccion> getAtraccionesFavoritas() {
+        return atraccionesFavoritas;
+    }
+
+    public boolean esFavorita(Atraccion atraccion) {
+        return atraccionesFavoritas.contains(atraccion);
+    }
+
+    public void agregarVisita(RegistroVisita registro) {
+        historialVisitas.add(registro);
+    }
+
+    public void recargarSaldo(double monto) {
+        if (monto > 0) {
+            this.saldoVirtual += monto;
         }
     }
 
-    // Métodos Getter y Setter obligatorios para la prueba de tus compañeros
-    public List<Notificacion> getBuzonNotificaciones() {
-        return buzonNotificaciones;
+    public boolean deducirSaldo(double monto) {
+        if (saldoVirtual >= monto) {
+            saldoVirtual -= monto;
+            return true;
+        }
+        return false;
     }
 
     public double getSaldoVirtual() {
@@ -51,12 +70,12 @@ public class Visitante extends Persona implements INotificable {
         this.saldoVirtual = saldoVirtual;
     }
 
-    public String getFotografiaUrl() {
-        return fotografiaUrl;
+    public String getRutaFotografia() {
+        return rutaFotografia;
     }
 
-    public void setFotografiaUrl(String fotografiaUrl) {
-        this.fotografiaUrl = fotografiaUrl;
+    public void setRutaFotografia(String rutaFotografia) {
+        this.rutaFotografia = rutaFotografia;
     }
 
     public Ticket getTicket() {
@@ -69,5 +88,15 @@ public class Visitante extends Persona implements INotificable {
 
     public List<RegistroVisita> getHistorialVisitas() {
         return historialVisitas;
+    }
+
+    public List<Notificacion> getBuzonNotificaciones() {
+        return buzonNotificaciones;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - Saldo: $%.2f - Ticket: %s",
+                super.toString(), saldoVirtual, ticket != null ? ticket.getTipo() : "Sin ticket");
     }
 }

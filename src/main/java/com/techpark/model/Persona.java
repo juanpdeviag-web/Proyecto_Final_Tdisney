@@ -1,38 +1,32 @@
 package com.techpark.model;
-import java.io.Serializable;
 
-public abstract class Persona implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    // Atributos privados encapsulados
+public abstract class Persona {
+    private String idDocumento;
     private String nombre;
-    private String documento;
     private int edad;
     private double estatura;
 
-    // Constructor completo
-    public Persona(String nombre, String documento, int edad, double estatura) {
+    public Persona(String idDocumento, String nombre, int edad, double estatura) {
+        this.idDocumento = idDocumento;
         this.nombre = nombre;
-        this.documento = documento;
         this.edad = edad;
         this.estatura = estatura;
     }
 
-    // Métodos Getter y Setter (Encapsulamiento)
+    public String getIdDocumento() {
+        return idDocumento;
+    }
+
+    public void setIdDocumento(String idDocumento) {
+        this.idDocumento = idDocumento;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
     }
 
     public int getEdad() {
@@ -51,5 +45,9 @@ public abstract class Persona implements Serializable {
         this.estatura = estatura;
     }
 
-
+    @Override
+    public String toString() {
+        return String.format("%s - %s (Edad: %d, Estatura: %.2fm)",
+                idDocumento, nombre, edad, estatura);
+    }
 }
